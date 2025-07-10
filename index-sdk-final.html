@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الاستشارات القانونية - المحامي أسامة هاشم</title>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; text-align: center; direction: rtl; }
+        .service { background: white; margin: 20px auto; padding: 20px; border-radius: 10px; width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .btn { padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        .btn:hover { background: #f04a4a; }
+    </style>
+</head>
+<body>
+    <h1>خدمات الاستشارات القانونية</h1>
+    <div id="services"></div>
+
+    <script>
+        Pi.init({ version: "2.0" });
+
+        const services = [
+            { id: "court", title: "استشارات القضاء والمحاكم", amount: 50, memo: "استشارة القضاء", type: "court" },
+            { id: "marriage", title: "زواج الأجانب في مصر", amount: 50, memo: "استشارة زواج", type: "marriage" },
+            { id: "education", title: "استشارات التعليم", amount: 65, memo: "استشارة تعليم", type: "education" },
+            { id: "residence", title: "استشارات الإقامة", amount: 75, memo: "استشارة إقامة", type: "residence" },
+            { id: "nationality", title: "الحصول على الجنسية", amount: 100, memo: "استشارة جنسية", type: "nationality" },
+            { id: "company", title: "تأسيس الشركات", amount: 200, memo: "استشارة تأسيس شركة", type: "company" }
+        ];
+
+        const container = document.getElementById('services');
+        services.forEach(service => {
+            const div = document.createElement('div');
+            div.className = 'service';
+            div.innerHTML = `
+                <h3>${service.title}</h3>
+                <p>السعر: ${service.amount} Pi</p>
+                <button class="btn" onclick="handlePayment('${service.id}')">طلب الاستشارة</button>
+            `;
+            container.appendChild(div);
+        });
+
+        function handlePayment(serviceId) {
+            const service = services.find(s => s.id === serviceId);
+            Pi.authenticate(['payments'], (payment) => {
+                console.log("دفع غير مكتمل:", payment);
+            }).then(function(auth) {
+                Pi.createPayment({
+                    amount: service.amount,
+                    memo: service.memo,
+                    metadata: { serviceType: service.type }
+                }, {
+                    onReadyForServerApproval: function(paymentId) {
+                        console.log("بانتظار الموافقة من الخادم", paymentId);
+                    },
+                    onReadyForServerCompletion: function(paymentId, txid) {
+                        alert(`✅ تم الدفع بنجاح لخدمة ${service.title}`);
+                    },
+                    onCancel: function(paymentId) {
+                        alert("❌ تم إلغاء عملية الدفع.");
+                    },
+                    onError: function(error, payment) {
+                        console.error("خطأ في الدفع:", error);
+                        alert("⚠️ حدث خطأ أثناء عملية الدفع.");
+                    }
+                });
+            }).catch(function(error) {
+                alert("❌ فشل تسجيل الدخول إلى Pi Network.");
+                console.error(error);
+            });
+        }
+    </script>
+</body>
+</html>
