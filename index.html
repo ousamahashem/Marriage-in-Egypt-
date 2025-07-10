@@ -1,90 +1,54 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الزواج في مصر - المحامي أسامة هاشم</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script defer src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(to right, #f8fafc, #e2e8f0);
-      margin: 0;
-      padding: 0;
-      color: #111;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
-    header {
-      background: #3a0ca3;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      border-radius: 10px;
-    }
-    h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-    .hero {
-      margin-top: 30px;
-      text-align: center;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .hero h2 {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      color: #3a0ca3;
-    }
-    .pi-connect {
-      background: #4f46e5;
-      color: white;
-      padding: 10px 25px;
-      border: none;
-      border-radius: 50px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: #555;
-      font-size: 0.9rem;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>اتصال Pi Network</title>
+    <script defer src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        button {
+            background-color: #6c5ce7;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #341f97;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>الزواج في مصر</h1>
-      <p>بواسطة المحامي أسامة هاشم</p>
-    </header>
+    <h1>مرحبا بكم في تطبيق المحامي أسامة هاشم</h1>
+    <button id="connectBtn"><i class="fas fa-plug"></i> الاتصال بـ Pi Network</button>
 
-    <section class="hero">
-      <h2>منصة الاستشارات القانونية لزواج الأجانب</h2>
-      <p>احصل على خدمات قانونية متكاملة لدعم إجراءات زواج الأجانب في مصر، مع دفع آمن عبر Pi Network</p>
-      <button class="pi-connect" id="connectBtn"><i class="fas fa-plug"></i> الاتصال بـ Pi Network</button>
-    </section>
+    <script>
+        const connectBtn = document.getElementById("connectBtn");
 
-    <footer>
-      جميع الحقوق محفوظة © 2025 المحامي أسامة هاشم
-    </footer>
-  </div>
-
-  <script>
-    const connectBtn = document.getElementById("connectBtn");
-    connectBtn.addEventListener("click", async () => {
-      alert("تم الاتصال بمحفظة Pi (محاكاة)");
-      // لاحقاً يتم استدعاء pi.authenticate(...) عند تفعيل SDK الحقيقي
-    });
-  </script>
+        connectBtn.addEventListener("click", () => {
+            const scopes = ['username', 'payments'];
+            Pi.authenticate(scopes, function(authData) {
+                console.log("تم الاتصال بـ Pi:", authData);
+                alert("مرحباً، " + authData.user.username + "!");
+            }, function(error) {
+                console.error(error);
+                alert("فشل الاتصال بـ Pi Network");
+            });
+        });
+    </script>
 </body>
 </html>
