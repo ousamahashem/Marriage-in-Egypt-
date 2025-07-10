@@ -1,110 +1,130 @@
-
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE html><html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <title>المحامي أسامة هاشم</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            margin: 0;
-            padding: 0;
-            background: #f2f2f2;
-        }
-        nav {
-            background: #333;
-            color: white;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-        }
-        nav ul {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        nav li {
-            margin: 0 15px;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        #view {
-            padding: 30px;
-        }
-        .hero, .services, .about, .payment {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #c2185b;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الزواج في مصر - المحامي أسامة هاشم</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 </head>
 <body>
-
-<nav>
-  <ul>
-    <li><a href="#home">الرئيسية</a></li>
-    <li><a href="#services">الخدمات</a></li>
-    <li><a href="#payment">الدفع</a></li>
-    <li><a href="#about">عن المحامي</a></li>
-  </ul>
-</nav>
-
-<div id="view">
-  <!-- المحتوى سيتغير هنا -->
-</div>
-
-<script>
-  const routes = {
-    home: \`
-      <section class="hero">
-        <h1>مرحبا بك في تطبيق المحامي أسامة هاشم</h1>
-        <p>استشارات قانونية متخصصة عبر Pi Network.</p>
-      </section>
-    \`,
-    services: \`
-      <section class="services">
-        <h1>خدماتنا القانونية</h1>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="logo-icon"><i class="fas fa-balance-scale"></i></div>
+        <div class="logo-text">المحامي أسامة هاشم</div>
+      </div>
+      <nav>
         <ul>
-          <li>استشارة محكمة: 50 Pi</li>
-          <li>زواج الأجانب: 50 Pi</li>
-          <li>إقامة: 75 Pi</li>
+          <li><a href="#home" class="nav-link active">الرئيسية</a></li>
+          <li><a href="#services" class="nav-link">الخدمات</a></li>
+          <li><a href="#payment" class="nav-link">الدفع</a></li>
+          <li><a href="#about" class="nav-link">عن المحامي</a></li>
         </ul>
-      </section>
-    \`,
-    payment: \`
-      <section class="payment">
-        <h1>طريقة الدفع</h1>
-        <p>ادفع باستخدام Pi Network بعد تسجيل الدخول.</p>
-        <button onclick="alert('محاكاة الدفع عبر Pi')">ادفع الآن</button>
-      </section>
-    \`,
-    about: \`
-      <section class="about">
-        <h1>عن المحامي</h1>
-        <p>أسامة هاشم، محامي متخصص بخبرة طويلة في قضايا زواج الأجانب، الإقامة، والجنسية.</p>
-      </section>
-    \`
-  };
+      </nav>
+      <div class="user-section">
+        <button class="pi-connect-btn"><i class="pi-logo">π</i> الاتصال بـ Pi Network</button>
+        <div class="user-info" style="display: none;">
+          <div class="user-avatar">م</div>
+          <div class="user-details">
+            <div class="user-name">محمد أحمد</div>
+            <div class="user-wallet">G...FG</div>
+          </div>
+          <button class="logout-btn">تسجيل الخروج</button>
+        </div>
+      </div>
+    </header><main>
+  <section id="home" class="view-section">
+    <h1>استشارات قانونية متخصصة مع المحامي أسامة هاشم</h1>
+    <p>احصل على استشارات قانونية في كافة المجالات مع إمكانية الدفع الآمن عبر Pi Network.</p>
+  </section>
 
-  function renderRoute() {
-    const hash = location.hash.replace('#', '') || 'home';
-    const view = document.getElementById('view');
-    view.innerHTML = routes[hash] || '<p>الصفحة غير موجودة</p>';
-  }
+  <section id="services" class="view-section" style="display:none">
+    <h2>خدماتنا القانونية</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>زواج الأجانب في مصر</h3>
+        <p>إجراءات توثيق الزواج للأجانب في مصر.</p>
+        <div class="service-price"><span id="marriage-price">50</span> Pi</div>
+        <button class="service-btn" data-service="marriage">طلب الخدمة</button>
+      </div>
+      <div class="service-card">
+        <h3>الإقامة والجنسية</h3>
+        <p>استشارات للحصول على إقامة أو جنسية مصرية.</p>
+        <div class="service-price"><span id="residence-price">75</span> Pi</div>
+        <button class="service-btn" data-service="residence">طلب الخدمة</button>
+      </div>
+    </div>
+  </section>
 
-  window.addEventListener('hashchange', renderRoute);
-  window.addEventListener('load', renderRoute);
-</script>
+  <section id="payment" class="view-section" style="display:none">
+    <h2>طريقة الدفع</h2>
+    <p>رسوم التسجيل: 1 Pi</p>
+    <p>عنوان المحفظة: <code>GADQTIGX4OWAAAGNKEHUZG64CT4TV3XM6XYUSSSTHWW5I22YPWFFQOFG</code></p>
+    <button id="pay-btn">ادفع الآن</button>
+  </section>
 
-</body>
-</html>
+  <section id="about" class="view-section" style="display:none">
+    <h2>عن المحامي</h2>
+    <p>المحامي أسامة هاشم متخصص في قضايا زواج الأجانب، الإقامة، التراخيص، تأسيس الشركات، وله سجل مشرف في حل قضايا معقدة عبر منصة رقمية مبتكرة قائمة على Pi Network.</p>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 المحامي أسامة هاشم - جميع الحقوق محفوظة</p>
+</footer>
+
+  </div>  <script>
+    const links = document.querySelectorAll('.nav-link');
+    const views = document.querySelectorAll('.view-section');
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        const id = link.getAttribute('href').replace('#', '');
+        views.forEach(view => view.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+      });
+    });
+
+    document.querySelector('.pi-connect-btn').addEventListener('click', async () => {
+      try {
+        Pi.init({ version: "2.0" });
+        const scopes = ['payments'];
+        const auth = await Pi.authenticate(scopes, (payment) => {});
+        document.querySelector('.user-info').style.display = 'flex';
+        document.querySelector('.pi-connect-btn').style.display = 'none';
+        console.log('تم الاتصال بـ Pi Network:', auth);
+      } catch (e) {
+        alert('يرجى فتح التطبيق في متصفح Pi Browser للاتصال');
+      }
+    });
+
+    document.getElementById('pay-btn').addEventListener('click', async () => {
+      try {
+        Pi.createPayment({
+          amount: 1,
+          memo: "رسوم التسجيل لتطبيق المحامي أسامة هاشم",
+          metadata: { type: 'registration' }
+        }, {
+          onReadyForServerApproval: function (paymentId) {
+            console.log('Server approval needed for', paymentId);
+          },
+          onReadyForServerCompletion: function (paymentId, txid) {
+            alert('تم الدفع بنجاح!');
+          },
+          onCancel: function (paymentId) {
+            alert('تم إلغاء الدفع');
+          },
+          onError: function (error, payment) {
+            console.error(error);
+          }
+        });
+      } catch (err) {
+        alert('فشل الدفع: تأكد من الاتصال بـ Pi Network');
+      }
+    });
+  </script></body>
+    </html>
