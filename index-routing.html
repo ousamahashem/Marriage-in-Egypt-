@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>المحامي أسامة هاشم</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            background: #f2f2f2;
+        }
+        nav {
+            background: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav li {
+            margin: 0 15px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        #view {
+            padding: 30px;
+        }
+        .hero, .services, .about, .payment {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #c2185b;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+  <ul>
+    <li><a href="#home">الرئيسية</a></li>
+    <li><a href="#services">الخدمات</a></li>
+    <li><a href="#payment">الدفع</a></li>
+    <li><a href="#about">عن المحامي</a></li>
+  </ul>
+</nav>
+
+<div id="view">
+  <!-- المحتوى سيتغير هنا -->
+</div>
+
+<script>
+  const routes = {
+    home: \`
+      <section class="hero">
+        <h1>مرحبا بك في تطبيق المحامي أسامة هاشم</h1>
+        <p>استشارات قانونية متخصصة عبر Pi Network.</p>
+      </section>
+    \`,
+    services: \`
+      <section class="services">
+        <h1>خدماتنا القانونية</h1>
+        <ul>
+          <li>استشارة محكمة: 50 Pi</li>
+          <li>زواج الأجانب: 50 Pi</li>
+          <li>إقامة: 75 Pi</li>
+        </ul>
+      </section>
+    \`,
+    payment: \`
+      <section class="payment">
+        <h1>طريقة الدفع</h1>
+        <p>ادفع باستخدام Pi Network بعد تسجيل الدخول.</p>
+        <button onclick="alert('محاكاة الدفع عبر Pi')">ادفع الآن</button>
+      </section>
+    \`,
+    about: \`
+      <section class="about">
+        <h1>عن المحامي</h1>
+        <p>أسامة هاشم، محامي متخصص بخبرة طويلة في قضايا زواج الأجانب، الإقامة، والجنسية.</p>
+      </section>
+    \`
+  };
+
+  function renderRoute() {
+    const hash = location.hash.replace('#', '') || 'home';
+    const view = document.getElementById('view');
+    view.innerHTML = routes[hash] || '<p>الصفحة غير موجودة</p>';
+  }
+
+  window.addEventListener('hashchange', renderRoute);
+  window.addEventListener('load', renderRoute);
+</script>
+
+</body>
+</html>
