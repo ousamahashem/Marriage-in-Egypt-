@@ -1,35 +1,40 @@
-<!DOCTYPE html><html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marriage in Egypt - المحامي أسامة هاشم</title>
-  <link rel="manifest" href="manifest.json">
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f0f0f0;
-      text-align: center;
-      padding: 50px;
-    }
-    .pi-connect-btn {
-      background: linear-gradient(to right, #1e40af, #3b82f6);
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .pi-connect-btn:hover {
-      transform: scale(1.05);
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>زواج الأجانب في مصر - المحامي أسامة هاشم</title>
 </head>
-<body>
-  <h1>مرحباً بكم في تطبيق المحامي أسامة هاشم</h1>
-  <p>اضغط للاتصال بـ Pi Network</p>
-  <button class="pi-connect-btn">الاتصال بـ Pi Network</button>  <script>
-    // التهيئة
-    document.add
+<body style="font-family: Arial; text-align: center; background: #f5f5f5; padding: 50px;">
+  <h1>مرحبا بكم في تطبيق المحامي أسامة هاشم</h1>
+  <p>هذا التطبيق مخصص لتقديم خدمات زواج الأجانب في مصر بشكل آمن وسريع عبر Pi Network.</p>
+  
+  <div id="auth-section">
+    <button id="connect-btn" style="padding: 10px 20px; font-size: 18px;">الاتصال بـ Pi Network</button>
+    <p id="user-info" style="margin-top: 20px;"></p>
+  </div>
+
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script>
+    const connectBtn = document.getElementById("connect-btn");
+    const userInfo = document.getElementById("user-info");
+
+    if (!window.Pi) {
+      connectBtn.disabled = true;
+      connectBtn.innerText = "يرجى فتح التطبيق من خلال Pi Browser فقط";
+    } else {
+      Pi.init({ version: "2.0", sandbox: false });
+      connectBtn.addEventListener("click", async () => {
+        try {
+          const scopes = ["username", "payments"];
+          const result = await Pi.authenticate(scopes);
+          userInfo.innerText = "مرحبًا " + result.user.username + " 👋";
+          connectBtn.style.display = "none";
+        } catch (err) {
+          userInfo.innerText = "حدث خطأ: " + err.message;
+        }
+      });
+    }
+  </script>
+</body>
+</html>

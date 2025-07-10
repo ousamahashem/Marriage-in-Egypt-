@@ -1,17 +1,14 @@
-# Marriage in Egypt - Legal Services
+# Marriage in Egypt - زواج الأجانب في مصر
 
-Legal consulting app integrated with Pi Network for marriage, residency, and legal procedures in Egypt.
+هذا التطبيق يهدف لتسهيل خدمات زواج الأجانب في مصر، ويعتمد على تسجيل الدخول والدفع الآمن من خلال Pi Network.
 
-## 🔐 Pi Network Features
-- Connect to Pi Wallet
-- Simulated payment process with Pi
-- Dynamic pricing based on Pi value
+## المميزات
+- تسجيل دخول عبر Pi Browser
+- تأكيد الهوية باستخدام Pi SDK
+- خدمة قانونية موثوقة
 
-## 📁 Files Included
-- `index.html` – main app interface
-- `manifest.json` – Pi App Studio config
-- `privacy-policy.html` – privacy info
-- `terms-of-use.html` – usage policy
-
-## 🌐 Live Demo
-Visit: [https://ousamahashem.github.io/Marriage-in-Egypt-/](https://ousamahashem.github.io/Marriage-in-Egypt-/)
+## الروابط
+- [الرئيسية](index.html)
+- [سياسة الخصوصية](privacy-policy.html)
+- [شروط الاستخدام](terms.html)
+- [manifest.json](manifest.json)

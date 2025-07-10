@@ -1,15 +1,12 @@
 {
-  "name": "Marriage in Egypt",
-  "short_name": "MarriageEgypt",
-  "start_url": "index.html",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4cc9f0",
-  "orientation": "portrait-primary",
-  "description": "Legal services for marriage procedures in Egypt.",
-  "icons": [{
-    "src": "https://example.com/icon.png",
-    "sizes": "192x192",
-    "type": "image/png"
-  }]
+  "name": "زواج الأجانب في مصر",
+  "description": "تطبيق لتقديم استشارات وإجراءات زواج الأجانب في مصر من خلال Pi Network",
+  "version": "1.0.0",
+  "appIcon": "https://raw.githubusercontent.com/ousamahashem/Marriage-in-Egypt-/main/icon.png",
+  "themeColor": "#4cc9f0",
+  "developer": {
+    "name": "المحامي أسامة هاشم",
+    "url": "https://github.com/ousamahashem/Marriage-in-Egypt-"
+  },
+  "permissions": ["username", "payments"]
 }
