@@ -1,54 +1,92 @@
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>اتصال Pi Network</title>
-    <script defer src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #111;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-        button {
-            background-color: #6c5ce7;
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #341f97;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marriage in Egypt - Pi Network</title>
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #facc15;
+    }
+    .pi-connect-btn {
+      background: linear-gradient(to right, #1e40af, #3b82f6);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    .pi-connect-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .user-info {
+      margin-top: 20px;
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
-    <h1>مرحبا بكم في تطبيق المحامي أسامة هاشم</h1>
-    <button id="connectBtn"><i class="fas fa-plug"></i> الاتصال بـ Pi Network</button>
+  <div class="container">
+    <h1>مرحبًا بك في تطبيق المحامي أسامة هاشم</h1>
+    <button class="pi-connect-btn">
+      <span>π</span> الاتصال بـ Pi Network
+    </button>
+    <div class="user-info">
+      <p><strong>اسم المستخدم:</strong> <span class="user-name">---</span></p>
+      <p><strong>رقم المستخدم:</strong> <span class="user-wallet">---</span></p>
+    </div>
+  </div>
 
-    <script>
-        const connectBtn = document.getElementById("connectBtn");
+  <script>
+    document.querySelector('.pi-connect-btn').addEventListener('click', async function () {
+      try {
+        const scopes = ['username', 'payments'];
+        const authResult = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        
+        document.querySelector('.user-name').textContent = authResult.user.username;
+        document.querySelector('.user-wallet').textContent = authResult.user.uid;
 
-        connectBtn.addEventListener("click", () => {
-            const scopes = ['username', 'payments'];
-            Pi.authenticate(scopes, function(authData) {
-                console.log("تم الاتصال بـ Pi:", authData);
-                alert("مرحباً، " + authData.user.username + "!");
-            }, function(error) {
-                console.error(error);
-                alert("فشل الاتصال بـ Pi Network");
-            });
-        });
-    </script>
+        document.querySelector('.user-info').style.display = 'block';
+        document.querySelector('.pi-connect-btn').style.display = 'none';
+
+        alert('تم الاتصال بحساب Pi بنجاح ✅');
+      } catch (err) {
+        alert('فشل الاتصال بـ Pi ❌\n' + err.message);
+      }
+    });
+
+    function onIncompletePaymentFound(payment) {
+      console.log("تم العثور على دفعة غير مكتملة:", payment);
+    }
+  </script>
 </body>
 </html>
