@@ -1,75 +1,79 @@
-
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>الاستشارات القانونية - المحامي أسامة هاشم</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>زواج الأجانب في مصر - المحامي أسامة هاشم</title>
+    <link rel="manifest" href="manifest.json">
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <style>
-        body { font-family: Arial; padding: 20px; background: #f5f5f5; text-align: center; direction: rtl; }
-        .service { background: white; margin: 20px auto; padding: 20px; border-radius: 10px; width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .btn { padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-        .btn:hover { background: #f04a4a; }
+        body {
+            background: #121212;
+            color: #fff;
+            font-family: 'Tajawal', sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        .service-btn {
+            padding: 15px 30px;
+            background: #f72585;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            margin: 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <h1>خدمات الاستشارات القانونية</h1>
-    <div id="services"></div>
+    <h1>مرحباً بكم في تطبيق المحامي أسامة هاشم</h1>
+    <p>لخدمات زواج الأجانب والاستشارات القانونية عبر شبكة Pi</p><div id="user-info"></div>
 
-    <script>
-        Pi.init({ version: "2.0" });
+<button id="connect-btn" class="service-btn">الاتصال بـ Pi Network</button>
+<button id="pay-marriage" class="service-btn" style="display:none;">دفع استشارة زواج الأجانب (50 Pi)</button>
 
-        const services = [
-            { id: "court", title: "استشارات القضاء والمحاكم", amount: 50, memo: "استشارة القضاء", type: "court" },
-            { id: "marriage", title: "زواج الأجانب في مصر", amount: 50, memo: "استشارة زواج", type: "marriage" },
-            { id: "education", title: "استشارات التعليم", amount: 65, memo: "استشارة تعليم", type: "education" },
-            { id: "residence", title: "استشارات الإقامة", amount: 75, memo: "استشارة إقامة", type: "residence" },
-            { id: "nationality", title: "الحصول على الجنسية", amount: 100, memo: "استشارة جنسية", type: "nationality" },
-            { id: "company", title: "تأسيس الشركات", amount: 200, memo: "استشارة تأسيس شركة", type: "company" }
-        ];
+<script>
+    let currentUser = null;
 
-        const container = document.getElementById('services');
-        services.forEach(service => {
-            const div = document.createElement('div');
-            div.className = 'service';
-            div.innerHTML = `
-                <h3>${service.title}</h3>
-                <p>السعر: ${service.amount} Pi</p>
-                <button class="btn" onclick="handlePayment('${service.id}')">طلب الاستشارة</button>
-            `;
-            container.appendChild(div);
-        });
+    function onIncompletePaymentFound(payment) {
+        console.log('Incomplete payment found:', payment);
+    }
 
-        function handlePayment(serviceId) {
-            const service = services.find(s => s.id === serviceId);
-            Pi.authenticate(['payments'], (payment) => {
-                console.log("دفع غير مكتمل:", payment);
-            }).then(function(auth) {
-                Pi.createPayment({
-                    amount: service.amount,
-                    memo: service.memo,
-                    metadata: { serviceType: service.type }
-                }, {
-                    onReadyForServerApproval: function(paymentId) {
-                        console.log("بانتظار الموافقة من الخادم", paymentId);
-                    },
-                    onReadyForServerCompletion: function(paymentId, txid) {
-                        alert(`✅ تم الدفع بنجاح لخدمة ${service.title}`);
-                    },
-                    onCancel: function(paymentId) {
-                        alert("❌ تم إلغاء عملية الدفع.");
-                    },
-                    onError: function(error, payment) {
-                        console.error("خطأ في الدفع:", error);
-                        alert("⚠️ حدث خطأ أثناء عملية الدفع.");
-                    }
-                });
-            }).catch(function(error) {
-                alert("❌ فشل تسجيل الدخول إلى Pi Network.");
-                console.error(error);
-            });
+    document.getElementById("connect-btn").addEventListener("click", async () => {
+        try {
+            await Pi.init({ version: "2.0" });
+            const scopes = ['payments'];
+            const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+            currentUser = auth.user;
+            document.getElementById("user-info").innerHTML = `مرحباً ${currentUser.username}`;
+            document.getElementById("connect-btn").style.display = 'none';
+            document.getElementById("pay-marriage").style.display = 'inline-block';
+        } catch (error) {
+            alert("فشل الاتصال بـ Pi Network. تأكد من فتح التطبيق عبر Pi Browser.");
         }
-    </script>
+    });
+
+    document.getElementById("pay-marriage").addEventListener("click", async () => {
+        Pi.createPayment({
+            amount: 50,
+            memo: "استشارة زواج الأجانب في مصر",
+            metadata: { service: "marriage" }
+        }, {
+            onReadyForServerApproval: function(paymentId) {
+                console.log("Ready for approval:", paymentId);
+            },
+            onReadyForServerCompletion: function(paymentId, txid) {
+                alert("تم الدفع بنجاح!\nرقم العملية: " + txid);
+            },
+            onCancel: function(paymentId) {
+                alert("تم إلغاء عملية الدفع");
+            },
+            onError: function(error, payment) {
+                alert("حدث خطأ أثناء الدفع: " + error);
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
