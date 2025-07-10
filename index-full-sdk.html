@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>marriage in Egypt - المحامي أسامة هاشم</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <!-- باقي الأكواد مثل css & style و FontAwesome تكون كما رفعتها أنت -->
+</head>
+<body>
+    <!-- نفس المحتوى الخاص بك، مثل الهيدر والقوائم والخدمات والإعلانات -->
+
+    <!-- زر الدفع الحقيقي -->
+    <script>
+        // بيانات الخدمة المختارة (سيتم ملؤها تلقائيًا عند الضغط)
+        let selectedService = "";
+
+        // محاكاة الاتصال بـ Pi Network
+        document.querySelectorAll('.pi-connect-btn').forEach(button => {
+            button.addEventListener('click', async () => {
+                try {
+                    const scopes = ['payments'];
+                    const authResult = await window.Pi.authenticate(scopes, onIncompletePaymentFound);
+                    document.querySelector('.user-info').style.display = 'flex';
+                    document.querySelectorAll('.pi-connect-btn').forEach(btn => btn.style.display = 'none');
+                    console.log("Authenticated", authResult);
+                    alert("تم الاتصال بـ Pi Network بنجاح");
+                } catch (error) {
+                    console.error("Authentication failed:", error);
+                    alert("فشل الاتصال بـ Pi Network");
+                }
+            });
+        });
+
+        // دالة عند الدفع غير مكتمل
+        async function onIncompletePaymentFound(payment) {
+            console.log("عثر على دفعة غير مكتملة:", payment);
+        }
+
+        // تنفيذ الدفع عند الضغط على زر "طلب الاستشارة"
+        document.querySelectorAll('.service-btn').forEach(button => {
+            button.addEventListener('click', async function () {
+                const serviceCard = this.closest('.service-card');
+                const serviceName = serviceCard.querySelector('.service-title').textContent;
+                const servicePrice = parseFloat(serviceCard.querySelector('.service-price').textContent);
+                selectedService = serviceName;
+
+                try {
+                    const paymentData = {
+                        amount: servicePrice.toFixed(2),
+                        memo: `طلب استشارة: ${serviceName}`,
+                        metadata: { service: serviceName }
+                    };
+
+                    const payment = await Pi.createPayment(paymentData, {
+                        onReadyForServerApproval: function(paymentId) {
+                            console.log("Ready for server approval:", paymentId);
+                        },
+                        onReadyForServerCompletion: function(paymentId, txid) {
+                            console.log("Ready for server completion:", paymentId, txid);
+                        },
+                        onCancel: function(paymentId) {
+                            console.log("Payment cancelled:", paymentId);
+                            alert("تم إلغاء عملية الدفع.");
+                        },
+                        onError: function(error, payment) {
+                            console.error("Payment error:", error);
+                            alert("حدث خطأ أثناء الدفع.");
+                        }
+                    });
+
+                    alert(`تم دفع ${paymentData.amount} Pi مقابل ${paymentData.memo}`);
+                } catch (err) {
+                    console.error("خطأ أثناء الدفع:", err);
+                    alert("تعذر تنفيذ الدفع.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
