@@ -1,40 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>زواج الأجانب في مصر - المحامي أسامة هاشم</title>
-</head>
-<body style="font-family: Arial; text-align: center; background: #f5f5f5; padding: 50px;">
-  <h1>مرحبا بكم في تطبيق المحامي أسامة هاشم</h1>
-  <p>هذا التطبيق مخصص لتقديم خدمات زواج الأجانب في مصر بشكل آمن وسريع عبر Pi Network.</p>
-  
-  <div id="auth-section">
-    <button id="connect-btn" style="padding: 10px 20px; font-size: 18px;">الاتصال بـ Pi Network</button>
-    <p id="user-info" style="margin-top: 20px;"></p>
-  </div>
-
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <script>
-    const connectBtn = document.getElementById("connect-btn");
-    const userInfo = document.getElementById("user-info");
-
-    if (!window.Pi) {
-      connectBtn.disabled = true;
-      connectBtn.innerText = "يرجى فتح التطبيق من خلال Pi Browser فقط";
-    } else {
-      Pi.init({ version: "2.0", sandbox: false });
-      connectBtn.addEventListener("click", async () => {
-        try {
-          const scopes = ["username", "payments"];
-          const result = await Pi.authenticate(scopes);
-          userInfo.innerText = "مرحبًا " + result.user.username + " 👋";
-          connectBtn.style.display = "none";
-        } catch (err) {
-          userInfo.innerText = "حدث خطأ: " + err.message;
-        }
-      });
-    }
-  </script>
-</body>
-</html>
