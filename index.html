@@ -1,91 +1,65 @@
 
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Marriage in Egypt - Pi Network</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تطبيق المحامي أسامة هاشم</title>
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background: #111827;
-      color: white;
+      background: #111;
+      color: #fff;
       text-align: center;
-      padding: 60px 20px;
+      padding: 50px;
     }
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: #facc15;
-    }
-    .pi-connect-btn {
-      background: linear-gradient(to right, #1e40af, #3b82f6);
-      color: white;
+    .btn {
+      background: #4cc9f0;
       border: none;
-      padding: 10px 20px;
-      border-radius: 50px;
-      font-weight: bold;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 30px;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-    .pi-connect-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .user-info {
-      margin-top: 20px;
-      display: none;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 10px;
-      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>مرحبًا بك في تطبيق المحامي أسامة هاشم</h1>
-    <button class="pi-connect-btn">
-      <span>π</span> الاتصال بـ Pi Network
-    </button>
-    <div class="user-info">
-      <p><strong>اسم المستخدم:</strong> <span class="user-name">---</span></p>
-      <p><strong>رقم المستخدم:</strong> <span class="user-wallet">---</span></p>
-    </div>
-  </div>
+  <h1>مرحباً بكم في تطبيق المحامي أسامة هاشم</h1>
+  <p>للدخول باستخدام حساب Pi، اضغط على الزر أدناه:</p>
+  <button class="btn" onclick="loginWithPi()">الاتصال بـ Pi Network</button>
 
   <script>
-    document.querySelector('.pi-connect-btn').addEventListener('click', async function () {
+    document.addEventListener("DOMContentLoaded", async function () {
+      if (typeof window.Pi === "undefined") {
+        alert("⚠️ يجب فتح التطبيق من خلال Pi Browser فقط.");
+        return;
+      }
       try {
-        const scopes = ['username', 'payments'];
-        const authResult = await Pi.authenticate(scopes, onIncompletePaymentFound);
-        
-        document.querySelector('.user-name').textContent = authResult.user.username;
-        document.querySelector('.user-wallet').textContent = authResult.user.uid;
-
-        document.querySelector('.user-info').style.display = 'block';
-        document.querySelector('.pi-connect-btn').style.display = 'none';
-
-        alert('تم الاتصال بحساب Pi بنجاح ✅');
+        await Pi.init({ version: "2.0" });
+        console.log("✅ Pi SDK Initialized");
       } catch (err) {
-        alert('فشل الاتصال بـ Pi ❌\n' + err.message);
+        console.error("❌ خطأ في تهيئة Pi SDK:", err);
+        alert("حدث خطأ أثناء تهيئة Pi SDK");
       }
     });
 
+    const scopes = ['username', 'payments'];
+
+    async function loginWithPi() {
+      try {
+        const result = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        alert("✅ تم الاتصال بنجاح بحساب Pi: " + result.user.username);
+        console.log(result);
+      } catch (error) {
+        alert("❌ فشل الاتصال بـ Pi");
+        console.error(error);
+      }
+    }
+
     function onIncompletePaymentFound(payment) {
-      console.log("تم العثور على دفعة غير مكتملة:", payment);
+      console.warn("مدفوعات غير مكتملة:", payment);
     }
   </script>
 </body>
