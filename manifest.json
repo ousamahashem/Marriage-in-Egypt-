@@ -1,27 +1,15 @@
 {
-    "name": "marriage in Egypt",
-    "description": "خدمة استشارات قانونية لزواج الأجانب في مصر من خلال المحامي أسامة هاشم، مع دعم كامل للدفع عبر Pi Network.",
-    "version": "1.0.0",
-    "theme": {
-        "primaryColor": "#4361ee"
-    },
-    "icons": [
-        {
-            "src": "https://example.com/icon.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        }
-    ],
-    "permissions": [
-        "payments"
-    ],
-    "app": {
-        "url": "https://ousamahashem.vercel.app",
-        "navigation": {
-            "home": {
-                "label": "الرئيسية",
-                "url": "/"
-            }
-        }
-    }
+  "name": "Marriage in Egypt",
+  "short_name": "MarriageEgypt",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4cc9f0",
+  "orientation": "portrait-primary",
+  "description": "Legal services for marriage procedures in Egypt.",
+  "icons": [{
+    "src": "https://example.com/icon.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }]
 }
