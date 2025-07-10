@@ -29,17 +29,3 @@ A professional legal consultation web app designed for foreigners looking to get
 **Manifest File:**  
 [https://ousamahashem.github.io/Marriage-in-Egypt-/manifest.json](https://ousamahashem.github.io/Marriage-in-Egypt-/manifest.json)
 
----
-
-### 📌 إيه اللي تعمله دلوقتي؟
-
-1. افتح ملف `README.md` من GitHub.
-2. انسخ النص اللي فوق بالكامل.
-3. الصقه مكان النص الحالي في `README.md`.
-4. احفظ التعديلات.
-
----
-
-لو عايزني أجهزلك ملف `README.md` جاهز للتحميل والرفع على GitHub، قولي بس "جهزه"، وأنا أبعتهولك كـ ملف جاهز بصيغة `.md`.
-
-هل نكمل على كده؟
