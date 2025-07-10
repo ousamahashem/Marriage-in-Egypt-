@@ -1,55 +1,35 @@
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>الزواج في مصر - المحامي أسامة هاشم</title>
-  <script src="="https://sdk.minepi.com/pi-sdk.js"></script>
-</head>
-<body style="font-family: sans-serif; text-align: center; margin-top: 100px;">
-
-  <h1>مرحباً بك في تطبيق المحامي أسامة هاشم</h1>
-
-  <button id="pi-auth-btn" style="padding: 10px 20px; font-size: 18px; cursor: pointer;">الاتصال بـ Pi</button>
-
-  <div id="user-info" style="margin-top: 30px; display: none;">
-    <p>اسم المستخدم: <span id="pi-username"></span></p>
-    <p>عنوان المحفظة: <span id="pi-wallet"></span></p>
-  </div>
-
-  <script>
-    if (window.Pi) {
-      const Pi = window.Pi;
-
-      Pi.init({
-        version: "2.0",
-        sandbox: true
-      });
-
-      document.getElementById("pi-auth-btn").addEventListener("click", async () => {
-        try {
-          const scopes = ['username', 'payments', 'wallet_address'];
-
-          const authResult = await Pi.authenticate(scopes, function onIncompletePaymentFound(payment) {
-            console.log("دفعة غير مكتملة:", payment);
-          });
-
-          console.log("نتيجة المصادقة:", authResult);
-
-          document.getElementById("pi-username").textContent = authResult.user.username;
-          document.getElementById("pi-wallet").textContent = authResult.user.wallet_address;
-          document.getElementById("user-info").style.display = "block";
-          document.getElementById("pi-auth-btn").style.display = "none";
-
-        } catch (error) {
-          console.error("حدث خطأ أثناء المصادقة:", error);
-          alert("تعذر الاتصال بـ Pi. تأكد من أنك تستخدم Pi Browser.");
-        }
-      });
-
-    } else {
-      alert("يرجى فتح التطبيق من خلال Pi Browser لتفعيل الاتصال.");
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marriage in Egypt - المحامي أسامة هاشم</title>
+  <link rel="manifest" href="manifest.json">
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      padding: 50px;
     }
-  </script>
-</body>
-</html>
+    .pi-connect-btn {
+      background: linear-gradient(to right, #1e40af, #3b82f6);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .pi-connect-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>مرحباً بكم في تطبيق المحامي أسامة هاشم</h1>
+  <p>اضغط للاتصال بـ Pi Network</p>
+  <button class="pi-connect-btn">الاتصال بـ Pi Network</button>  <script>
+    // التهيئة
+    document.add
